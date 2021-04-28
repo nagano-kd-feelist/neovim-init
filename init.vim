@@ -52,6 +52,60 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 
+"LSP
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<cr>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<cr>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<cr>
+nnoremap <silent> <leader>u <cmd>lua vim.lsp.buf.rename()<cr>
+nnoremap <silent> <leader>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
+nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
+nnoremap <silent> ]e <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
+
+lua vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false, underline = false })
+lua require'lspconfig'.vimls.setup{}
+lua require'lspconfig'.jsonls.setup{ settings = { json = { schemas = { { fileMatch = {'tsconfig.json'}, url = 'http://json.schemastore.org/tsconfig' }, { fileMatch = {'.eslintrc.json'}, url = 'http://json.schemastore.org/eslintrc' } } } } }
+lua require'lspconfig'.tsserver.setup{}
+lua require'lspconfig'.intelephense.setup{}
+lua require'lspconfig'.vuels.setup{}
+lua require'lspconfig'.ccls.setup{}
+lua require'lspconfig'.rls.setup{}
+lua require'lspconfig'.gopls.setup{}
+
+" auto complete
+inoremap <silent><expr> <c-space> compe#complete()
+inoremap <silent><expr> <c-k> compe#confirm('<cr>')
+inoremap <silent><expr> <c-e> compe#close('<c-e>')
+
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.incomplete_delay = 400
+let g:compe.allow_prefix_unmatch = v:false
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.spell = v:true
+let g:compe.source.tags = v:true
+let g:compe.source.snippets_nvim = v:true
+
+" ale
+let g:ale_disable_lsp = 1
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+    \'html': [],
+    \'json': ['prettier'],
+    \'javascript': ['eslint'],
+    \'typescript': ['eslint'],
+    \'vue': ['eslint']
+\}
+
 " tree viewer
 nnoremap <silent> <leader>f. :Fern .<cr>
 nnoremap <silent> <leader>fd :Fern . -drawer<cr>
