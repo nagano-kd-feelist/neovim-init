@@ -34,9 +34,6 @@ Plug 'Yggdroot/indentLine'
 " trailing whitespace
 Plug 'bronson/vim-trailing-whitespace'
 
-" php
-Plug 'stephpy/vim-php-cs-fixer'
-
 " javascript
 Plug 'pangloss/vim-javascript'
 
@@ -56,6 +53,18 @@ set number
 set expandtab
 set tabstop=4
 set shiftwidth=4
+
+" coc
+set hidden
+set cmdheight=2
+set updatetime=300
+
+nmap <silent> <space><space> :<C-u>CocList<cr>
+nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
+nmap <silent> <space>df <Plug>(coc-definition)
+nmap <silent> <space>rf <Plug>(coc-references)
+nmap <silent> <space>rn <Plug>(coc-rename)
+nmap <silent> <space>fmt <Plug>(coc-format)
 
 " ale
 let g:ale_disable_lsp = 1
@@ -106,8 +115,3 @@ lua << EOF
         }
     })
 EOF
-
-" php
-let g:php_cs_fixer_path = "~/php-cs-fixer"
-nnoremap <silent> <leader>pcd :call PhpCsFixerFixDirectory()<cr>
-nnoremap <silent> <leader>pcf :call PhpCsFixerFixFile()<cr>
