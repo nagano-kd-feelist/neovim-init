@@ -53,6 +53,7 @@ cnoremap init :<C-u>edit $MYVIMRC<CR>
 set number
 set expandtab
 set tabstop=4
+set shiftwidth=4
 set autoindent
 set smartindent
 
