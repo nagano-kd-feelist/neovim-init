@@ -50,6 +50,9 @@ call plug#end()
 
 " Neovim Settings
 cnoremap init :<C-u>edit $MYVIMRC<CR>
+map <silent> <C-h> :b#<CR>
+map <silent> <C-j> :bprecious<CR>
+map <silent> <C-k> :bnext<CR>
 set number
 set expandtab
 set tabstop=4
