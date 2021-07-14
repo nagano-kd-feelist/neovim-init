@@ -50,15 +50,20 @@ call plug#end()
 
 " Neovim Settings
 cnoremap init :<C-u>edit $MYVIMRC<CR>
-map <silent> <C-h> :b#<CR>
-map <silent> <C-j> :bprecious<CR>
-map <silent> <C-k> :bnext<CR>
 set number
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set autoindent
 set smartindent
+
+nnoremap <silent> <space>h $<cr>
+nnoremap <silent> <space>l ^<cr>
+map <silent> <C-h> :b#<cr>
+map <silent> <C-j> :bprecious<cr>
+map <silent> <C-k> :bnext<cr>
+cnoremap tm :terminal<cr>
+tnoremap <C-\> <C-\><C-n><cr>
 
 " Anywhere SID.
 function! s:SID_PREFIX()
@@ -97,10 +102,10 @@ for n in range(1, 9)
         execute 'nnoremap <silent> [Tag]'.n ':<C-u>tabnext'.n.'<CR>'
 endfor
 
-map <silent> [Tag]c :tablast <bar> tabnew<CR>
-map <silent> [Tag]x :tabclose<CR>
-map <silent> [Tag]n :tabnext<CR>
-map <silent> [Tag]p :tabprevious<CR>
+map <silent> [Tag]c :tablast <bar> tabnew<cr>
+map <silent> [Tag]x :tabclose<cr>
+map <silent> [Tag]n :tabnext<cr>
+map <silent> [Tag]p :tabprevious<cr>
 
 highlight Pmenu ctermfg=white ctermbg=black
 highlight PmenuSel ctermfg=white ctermbg=gray
@@ -111,7 +116,7 @@ set cmdheight=2
 set updatetime=300
 
 nmap <silent> <space><space> :<C-u>CocList<cr>
-nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
+nmap <silent> <space>ch :<C-u>call CocAction('doHover')<cr>
 nmap <silent> <space>df <Plug>(coc-definition)
 nmap <silent> <space>rf <Plug>(coc-references)
 nmap <silent> <space>rn <Plug>(coc-rename)
