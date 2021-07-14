@@ -57,10 +57,10 @@ set shiftwidth=4
 set autoindent
 set smartindent
 
-nnoremap <silent> <space>h $<cr>
-nnoremap <silent> <space>l ^<cr>
+noremap <space>h ^
+noremap <space>l $
 map <silent> <C-h> :b#<cr>
-map <silent> <C-j> :bprecious<cr>
+map <silent> <C-j> :bprevious<cr>
 map <silent> <C-k> :bnext<cr>
 cnoremap tm :terminal<cr>
 tnoremap <C-\> <C-\><C-n><cr>
