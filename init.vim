@@ -35,6 +35,9 @@ Plug 'cohama/lexima.vim'
 " trailing whitespace
 Plug 'bronson/vim-trailing-whitespace'
 
+" php
+Plug 'stephpy/vim-php-cs-fixer'
+
 " javascript
 Plug 'pangloss/vim-javascript'
 
@@ -171,3 +174,12 @@ lua << EOF
         }
     })
 EOF
+
+" php-cs-fixer
+let g:php_cs_fixer_path = "~/vendor/friendsofphp/php-cs-fixer/php-cs-fixer"
+let g:php_cs_fixer_cache = ".php_cs.cache"
+let g:php_cs_fixer_config_file = ".php_cs"
+nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+
+autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
