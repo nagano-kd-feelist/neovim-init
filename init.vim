@@ -4,10 +4,11 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'simeji/winresizer'
 
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 
-"ale
-Plug 'dense-analysis/ale'
+" syntax highlight
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -44,12 +45,10 @@ Plug 'pangloss/vim-javascript'
 " typescript
 Plug 'leafgarland/typescript-vim'
 
-" vue
-Plug 'posva/vim-vue'
-Plug 'Shougo/context_filetype.vim'
+" blade
+Plug 'jwalton512/vim-blade'
 
 call plug#end()
-
 
 " Neovim Settings
 cnoremap init :<C-u>edit $MYVIMRC<CR>
@@ -57,6 +56,7 @@ set number
 set expandtab
 set tabstop=4
 set shiftwidth=4
+set indentexpr=4
 set autoindent
 set smartindent
 
@@ -65,7 +65,6 @@ noremap <space>l $
 map <silent> <C-h> :b#<cr>
 map <silent> <C-j> :bprevious<cr>
 map <silent> <C-k> :bnext<cr>
-cnoremap tm :terminal<cr>
 tnoremap <C-\> <C-\><C-n><cr>
 
 " Anywhere SID.
@@ -113,28 +112,22 @@ map <silent> [Tag]p :tabprevious<cr>
 highlight Pmenu ctermfg=white ctermbg=black
 highlight PmenuSel ctermfg=white ctermbg=gray
 
-" coc
-set hidden
-set cmdheight=2
-set updatetime=300
+" nvim-lspconfig
+lua require'lsp'()
 
-nmap <silent> <space><space> :<C-u>CocList<cr>
-nmap <silent> <space>ch :<C-u>call CocAction('doHover')<cr>
-nmap <silent> <space>df <Plug>(coc-definition)
-nmap <silent> <space>rf <Plug>(coc-references)
-nmap <silent> <space>rn <Plug>(coc-rename)
-nmap <silent> <space>fmt <Plug>(coc-format)
+" nvim-completion
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
 
-" ale
-let g:ale_disable_lsp = 1
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {
-    \'html': [],
-    \'json': ['prettier'],
-    \'javascript': ['eslint'],
-    \'typescript': ['eslint'],
-    \'vue': ['eslint']
-\}
+" treesitter
+lua <<EOF
+    require'nvim-treesitter.configs'.setup {
+      ensure_installed = "maintained",
+      highlight = {
+        enable = true,
+      },
+    }
+EOF
 
 " tree viewer
 nnoremap <silent> <leader>f. :Fern .<cr>
@@ -181,5 +174,4 @@ let g:php_cs_fixer_cache = ".php_cs.cache"
 let g:php_cs_fixer_config_file = ".php_cs"
 nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
 nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
-
-autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+"autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
